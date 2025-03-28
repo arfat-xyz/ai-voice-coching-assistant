@@ -24,14 +24,12 @@ rl.question("Enter your commit message: ", (commitMessage) => {
           return;
         }
 
-        // If it's a git push, handle stderr as a success message
         if (isPushCommand && stderr && stderr.includes("main -> main")) {
           console.log(`Git Push Success: ${stderr}`);
           resolve(stdout);
           return;
         }
 
-        // Handle other stderr as an error
         if (stderr) {
           reject(`Stderr: ${stderr}`);
           return;
@@ -47,46 +45,39 @@ rl.question("Enter your commit message: ", (commitMessage) => {
 
   // Execute git add
   executeCommand("git add .", "Files added successfully:")
-    .then(() => {
-      // Execute git commit
-      return executeCommand(
+    .then(() =>
+      executeCommand(
         `git commit -m "${commitMessage}"`,
         "Commit message added:"
-      );
-    })
+      )
+    )
     .then((commitOutput) => {
-      // Commit output example: main 0964973 add dynamic code 4
       console.log("Commit Output:", commitOutput);
-
-      // Execute git push
       return executeCommand(
         "git push",
         "Push to remote repository successful:",
         true
       );
     })
-    .then((pushOutput) => {
-      // Push output example: de502e1..0964973  main -> main
-      console.log("Push Output:", pushOutput);
-
-      // Now execute npm run dev and capture its output
+    .then(() => {
+      // Run npm run dev without prefixing "Server Output:"
       const devProcess = exec("npm run dev");
 
       devProcess.stdout.on("data", (data) => {
-        console.log(`Server Output: ${data}`);
+        process.stdout.write(data); // Directly output without prefix
       });
 
       devProcess.stderr.on("data", (data) => {
-        console.error(`Server Error: ${data}`);
+        process.stderr.write(data); // Directly output without prefix
       });
 
       devProcess.on("close", (code) => {
         console.log(`Server process exited with code ${code}`);
-        rl.close(); // Close readline interface after the process ends
+        rl.close();
       });
     })
     .catch((error) => {
       console.error(error);
-      rl.close(); // Close readline interface in case of an error
+      rl.close();
     });
 });
