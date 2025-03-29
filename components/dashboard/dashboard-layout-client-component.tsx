@@ -14,7 +14,7 @@ const DashboardLayoutClientComponent = ({
   return (
     <DashboardUserContext.Provider value={user}>
       <DashboardHeaderComponent />
-      {children}
+      <div className="p-10 mt-20 lg:px-32 xl:px-56 2xl:px-72">{children}</div>
     </DashboardUserContext.Provider>
   );
 };
