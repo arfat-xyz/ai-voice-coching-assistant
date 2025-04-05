@@ -1,4 +1,11 @@
-export const coachingOptions = [
+export interface CoachingOptionProps {
+  name: string;
+  icon: string;
+  prompt: string;
+  summeryPrompt: string;
+  abstract: string;
+}
+export const coachingOptions: CoachingOptionProps[] = [
   {
     name: "Topic Base Lecture",
     icon: "/lecture.png",
