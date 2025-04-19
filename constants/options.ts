@@ -1,10 +1,8 @@
-export interface CoachingOptionProps {
-  name: string;
-  icon: string;
-  prompt: string;
-  summeryPrompt: string;
-  abstract: string;
-}
+import {
+  CoachingExpertProps,
+  CoachingOptionProps,
+} from "@/lib/interface/utils";
+
 export const coachingOptions: CoachingOptionProps[] = [
   {
     name: "Topic Base Lecture",
@@ -53,7 +51,7 @@ export const coachingOptions: CoachingOptionProps[] = [
   },
 ];
 
-export const CoachingExpert = [
+export const CoachingExpert: CoachingExpertProps[] = [
   {
     name: "Joanna",
     avatar: "/t1.avif",

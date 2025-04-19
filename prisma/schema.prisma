@@ -81,3 +81,14 @@ model Authenticator {
 
   @@unique([userId, credentialID])
 }
+
+model DiscussionRoom {
+  id             String  @id @default(uuid()) @map("_id")
+  coachingOption String
+  expertName     String
+  topic          String
+  conversation   String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
